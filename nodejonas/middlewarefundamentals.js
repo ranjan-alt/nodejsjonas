@@ -1,12 +1,19 @@
+///////
+////
+///
+// now after learning.js we will refactor the code to improve the look and feel of our code 
+// we will also learn middleware
+
 
 const express = require("express");
 const fs = require("fs")
 
 
 const app = express();
-app.use(express.json())
-
-app.use((req, res, next) => {
+app.use(express.json()) // app.use example of middleware
+//middleware video started
+//middleware ------------------------------------------->>>>>>>>>>>>>>>
+app.use((req, res, next) => {                 ///globally middleware is added 
     console.log('Hello from middleware')
     next()
 })
