@@ -28,9 +28,33 @@ app.get("/api/v1/tours", (req, res) => {     // create your own version of api w
     })
 })
 
+//GET Single tours URL Parameters
+app.get("/api/v1/tours/:id", (req, res) => {
+    console.log(req.params)   //req.params is a really nice object that assigns value to our variable or the parameter we define
+
+    const id = req.params.id * 1;  // since id is a string to convert it to number we just have to multiply with the number
+    const tour = tours.find(el => el.id === id)   // this callback with find method will return true or false and find will create an array where the id is matched
+    //find is a reqular js function which can be used on arrays 
+    //here we pass a callback function it will bascically loop through each of the array and with each of the iteration we will have access to current element and it will return true or false in each iteration
+    // then find will create ana array which will only create an elements where this comapraison will be true
+    if (id > tours.length) {
+        return res.status(404).json({
+            status: "failed",
+            message: "Invalid ID"
+        })
+    }
+
+    res.status(200).json({
+        status: "success",
+        data: {
+            tour
+        }
+    })
+})
+
 //POST METHOD
-app.post("/api/v1/tours", (req, res) => {    //the method changes but the URL remains same and we can data from client to the server
-    //req object stores all the data and information about the request that was perfomed
+app.post("/api/v1/tours", (req, res) => {    //the method will only change but the URL remains same and we can get data from client to the server
+    //req is an object which stores all the data and information about the request that was perfomed
     //express doesnot put the body data on the request so in order to have the data available we have to use something called middleware
     // for post request to be performed we are using middleware i.e ----->>>>> app.use(express.json())
 
