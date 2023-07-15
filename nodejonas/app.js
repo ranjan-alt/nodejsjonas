@@ -1,7 +1,5 @@
 // summary 
 //so the app will get the request and depending on the router it will enter the routes and then it will execute controllers and finally the response is send 
-
-
 const express = require("express");
 const morgan = require("morgan")
 
@@ -11,10 +9,14 @@ const userRouter = require("./routes/userRoutes")
 const app = express();
 
 //1)MIDDLEWARES
-app.use(morgan("dev"))
+if (process.env.NODE_ENV === "development") {
+    app.use(morgan("dev"))
+}
+
+
 app.use(morgan("tiny"))
 app.use(express.json())
-
+app.use(express.static(`${__dirname}/public`)) //this is how we can serve static folder from public and not form the route
 app.use((req, res, next) => {
     console.log('Hello from middleware')
     next()

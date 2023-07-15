@@ -1,3 +1,6 @@
 
  //question shall we write writefile or writefilesync ?? [Event Loop Lecture]
  //section6 lecture of nodejs is very important
+
+ //env variables - express apps can run on different env like development or prod and different databases
+ //              -  by dafult express sets up in development
