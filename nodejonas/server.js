@@ -1,16 +1,17 @@
-
-//4) STARTING THE SERVER
+const mongoose = require('mongoose')
 const dotenv = require("dotenv")
 dotenv.config({ path: "./config.env" })
+
+
 const app = require("./app")
-
-
-console.log(app.get('env'))// it will say development
-
-
-
-
-// console.log(process.env) // it will console buch of env
+const DB = process.env.DATABASE
+mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log("DB Connected successfully")
+    })
+    .catch((error) => {
+        console.log("DB Connection error:", error)
+    });
 
 
 

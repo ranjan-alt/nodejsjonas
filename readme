@@ -4,3 +4,5 @@
 
  //env variables - express apps can run on different env like development or prod and different databases
  //              -  by dafult express sets up in development
+
+ //IN NODEJONS copy section 6 is written
