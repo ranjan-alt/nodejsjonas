@@ -8,7 +8,24 @@ exports.getAllTours = async (req, res) => {
     //to get the tour we use find method() and to create a new tour we use Create() method
     //find method will return the data in array 
     try {
-        const tours = await Tour.find()
+        const queryObj = { ...req.query }
+        const excludedFields = ["page", "sort", "limit", "fields"]
+        excludedFields.forEach(el => delete queryObj[el])
+
+        //ADVANCE FILTERING
+        let queryStr = JSON.stringify(queryObj);
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g,)
+        let query = Tour.find(JSON.parse(queryStr))
+
+        //SORTING QUERY
+        if (req.query.sort) {
+            const sortBy = req.query.sort.split(",").join(" ")
+            query = query.sort(sortBy)
+        }
+
+        //EXECUTE QUERY
+        console.log(req.query, queryObj)
+        const tours = await query
 
         res.status(200).json({
             status: "success",

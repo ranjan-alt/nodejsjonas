@@ -6,3 +6,7 @@
  //              -  by dafult express sets up in development
 
  //IN NODEJONS copy section 6 is written
+//qUESTION - How to import data from JSON and save it to MONGOdb
+// answer --->> section 8 video no 94
+
+// making api better filtering - QUERY STRING
