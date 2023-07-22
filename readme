@@ -1,12 +1,19 @@
 
- //question shall we write writefile or writefilesync ?? [Event Loop Lecture]
- //section6 lecture of nodejs is very important
+//question shall we write writefile or writefilesync ?? [Event Loop Lecture]
+//section6 lecture of nodejs is very important
 
- //env variables - express apps can run on different env like development or prod and different databases
- //              -  by dafult express sets up in development
+//env variables - express apps can run on different env like development or prod and different databases
+//              -  by dafult express sets up in development
 
- //IN NODEJONS copy section 6 is written
+//IN NODEJONS copy section 6 is written
 //qUESTION - How to import data from JSON and save it to MONGOdb
 // answer --->> section 8 video no 94
 
 // making api better filtering - QUERY STRING
+// making api better filtering - QUERY STRING
+
+//there are four types of middleware in mongoose 
+1 - document
+2 - query
+3 - agrregate
+4 - model
