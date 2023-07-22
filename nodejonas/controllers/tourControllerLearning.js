@@ -1,11 +1,23 @@
 
 //import the model here 
 const Tour = require("../../nodejonas/models/tourmodel")
-const APIFeatures = require("../utils/apiFeatures")
 
-//Now we will refactor the code and make the code more reusable
+
 //here we are using advance filtering sorting and limiting and we can club them in constructor function which we will learn later
-//and we will import the in class in UTILS folder 
+// just showing one example here 
+// class APIFeatures {
+//     constructor(query, queryString) {
+//         this.query = query
+//         this.queryString = queryString
+//     }
+
+//     //now we will create one method for each of the following
+//     filter() {
+//         const queryObj = { ...this.queryString }
+//         const excludedFields = ["page", "sort", "limit", "fields"]
+//         console.log(queryObj)
+//     }
+// }
 
 
 exports.aliasTopTours = (req, res, next) => {
@@ -15,16 +27,73 @@ exports.aliasTopTours = (req, res, next) => {
     next()  // if not written next otherwise middleware will stuck here and will not move to next middleware
 }
 
-
 exports.getAllTours = async (req, res) => {
     //to get the tour we use find method() and to create a new tour we use Create() method
     //find method will return the data in array 
     try {
 
-        // EXECUTE QUERY
-        // const features = new APIFeatures(Tour.find(), req.query).filter().sort().limitFields().paginate(); //we keep on chaining methods
-        const features = new APIFeatures(Tour.find(), req.query)
-        const tours = await features.query
+        //BUILD QUERY
+        //in mongoose there are two ways to write DATABASE QUERIES
+        //1 - just use filter object
+        //2 - some special mongoose method
+
+        //1)FILTERING
+        //1st way by using filter object 
+        // const tour = await Tour.find({
+        //     duration: 5,
+        //     difficulty: easy
+        // })
+
+        // we dont want to query data in database we only need pagination thats why we are exculding these fields
+        const queryObj = { ...req.query } //it will contain all the key value pairs which we give in req.query object
+        const excludedFields = ["page", "sort", "limit", "fields"]
+        excludedFields.forEach(el => delete queryObj[el])
+        console.log(req.query)
+
+        //2)ADVANCE FILTERING
+
+        //    { duration: {$gte: 5}, difficulty: easy}
+        // { duration: {gte: 5}, difficulty: easy}
+        let queryStr = JSON.stringify(queryObj);
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`)
+        //replace method requires a callback and a powerful callback is match
+        console.log(JSON.parse(queryStr))
+        // let query = Tour.find(JSON.parse(queryStr))
+
+        let query = Tour.find(JSON.parse(queryStr))
+
+        // //3) SORTING QUERY
+        // if (req.query.sort) {
+        //     const sortBy = req.query.sort.split(",").join(" ")
+        //     query = query.sort(sortBy)
+        // } else {
+        //     query = query.sort(-createdAt)
+        // }
+
+
+        //4)FIELD LIMITING
+        //we only want price and name then field limiting is useful
+        if (req.query.fields) {
+            const fields = req.query.fields.split(",").join(" ");
+            // query = query.select("name price") this string is handelled above
+            query = query.select(fields)
+        } else {
+            query = query.select("-__v") //here minus means exculding __v 
+        }
+
+        //5) PAGINATION
+        // ?page=2&limit=10
+        const page = req.query.page * 1 || 1 // multply *1 to convert string to number and || 1 means by default we need page no 1
+        const limit = req.query.limit * 1 || 100
+        const skip = (page - 1) * limit  // it means 21st page is requested then uptill 20 page it will be skipped multiply by limit
+        query = query.skip(skip).limit(limit)
+        if (req.query.page) {
+            const numTours = await Tour.countDocuments();
+            if (skip > numTours) throw new Error(" The page doesnot exist")
+        }
+        // // EXECUTE QUERY
+
+        const tours = await query
         res.status(200).json({
             status: "success",
             results: tours.length,
@@ -168,38 +237,6 @@ exports.getMonthlyPlans = async (req, res) => {
     try {
         const year = req.params.year * 1
         const plan = await Tour.aggregate([
-            {
-                $unwind: '$startDates'
-            },
-            {
-                $match: {
-                    startDates: {
-                        $gte: new Date(`${year}-01-01`),
-                        $lte: new Date(`${year}-12-31`)
-                    }
-                }
-            },
-            {
-                $group: {
-                    _id: { month: "$startDates" },
-                    numTourStarts: { $sum: 1 },
-                    tours: { $push: "$name" }
-                }
-            },
-            {
-                $addFields: { month: "$_id" }
-            },
-            {
-                $project: {
-                    _id: 0
-                }
-            },
-            {
-                $sort: { numTourStarts: -1 }
-            },
-            {
-                $limit: 6
-            }
 
         ])
 
