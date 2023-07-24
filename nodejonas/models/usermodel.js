@@ -1,6 +1,6 @@
 //step 1 first we require mongoose package
 const mongoose = require("mongoose");
-// const validator = require("validator")
+const validator = require("validator")
 const bcrypt = require("bcryptjs")
 
 
@@ -23,9 +23,15 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-userSchema.pre("save", function (next) {
+userSchema.pre("save", async function (next) {
+    //Only run this function if password was actually modiefied
     if (!this.isModified("password")) return next()
 
+    //hash the password with the cost of 12
+    this.password = await bcrypt.hash(this.password, 12)
+    // delete the password confirm field
+    this.passwordConfirm = undefined;
+    next()
 })
 
 const User = mongoose.model("User", userSchema)
