@@ -71,7 +71,10 @@ exports.login = async (req, res, next) => {
 
 exports.protect = async (req, res, next) => {
     //1) Getting the token and check if user is there 
-
+    let token;
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+        token = req.headers.authorization.split(" ")[1]
+    }
     //2) validate the token or verification token
 
     //3) check if user still exists
