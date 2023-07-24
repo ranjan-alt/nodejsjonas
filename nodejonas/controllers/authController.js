@@ -67,3 +67,15 @@ exports.login = async (req, res, next) => {
 
 
 }
+
+
+exports.protect = async (req, res, next) => {
+    //1) Getting the token and check if user is there 
+
+    //2) validate the token or verification token
+
+    //3) check if user still exists
+
+    //4) if user changed password after the jwt was issued
+    next()
+}
