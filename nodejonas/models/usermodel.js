@@ -38,8 +38,11 @@ const userSchema = new mongoose.Schema({
     }
 })
 
+// This is a pre-save hook (middleware) that automatically runs before saving a user document.
+//  It hashes the password using bcrypt with a cost factor of 12 (strong hashing), 
+// and then it sets passwordConfirm to undefined to avoid persisting it in the database.
 userSchema.pre("save", async function (next) {
-    //Only run this function if password was actually modiefied
+    //Only run this function if password was actually modified
     if (!this.isModified("password")) return next()
 
     //hash the password with the cost of 12
@@ -48,6 +51,9 @@ userSchema.pre("save", async function (next) {
     this.passwordConfirm = undefined;
     next()
 })
+
+// This instance method is added to the user schema to compare the provided candidatePassword with the actual userPassword (hashed password).
+//  It uses bcrypt.compare to perform the comparison and returns a boolean indicating if the passwords match.
 
 userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
     return await bcrypt.compare(candidatePassword, userPassword)

@@ -36,6 +36,7 @@ exports.signUp = async (req, res) => {
 
 exports.login = async (req, res, next) => {
     try {
+        // const email = req.body.email  or
         const { email, password } = req.body; //i have destructured client has send this to check where credentials are correct or not
         // 1) check if email and apssword exits 
         if (!email || !password) {
@@ -62,7 +63,7 @@ exports.login = async (req, res, next) => {
             message: err.message
         })
     }
-    // const email = req.body.email  or
+
 
 
 }
