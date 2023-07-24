@@ -7,15 +7,30 @@ const bcrypt = require("bcryptjs")
 // name email foto password passwordconfirm
 
 const userSchema = new mongoose.Schema({
-    name: { type: String, required: [true, "Please tell us the name"] },
-    email: { type: String, required: [true, "please provide your email"], unique: true, lowercase: true },
+    name: {
+        type: String,
+        required: [true, "Please tell us the name"]
+    },
+    email: {
+        type: String,
+        required: [true, "please provide your email"],
+        unique: true,
+        lowercase: true
+    },
     Photo: { type: String },
-    password: { type: String, required: [true, "Please provide a password"], minLength: 8 },
+    password: {
+        type: String,
+        required: [true, "Please provide a password"],
+        minLength: 8,
+        select: false
+    },
     passwordConfirm: {
-        type: String, required: [true, "Please confrim your password"],
+        type: String,
+        required: [true, "Please confrim your password"],
         // this only works on SAVE!!!
         validate: {
             validator: function (el) {
+                console.log(el)
                 return el === this.password
             },
             message: "password is not same"
@@ -33,6 +48,10 @@ userSchema.pre("save", async function (next) {
     this.passwordConfirm = undefined;
     next()
 })
+
+userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
+    return await bcrypt.compare(candidatePassword, userPassword)
+}
 
 const User = mongoose.model("User", userSchema)
 module.exports = User

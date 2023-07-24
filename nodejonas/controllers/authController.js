@@ -1,5 +1,11 @@
 const User = require("../models/usermodel")
+const jwt = require("jsonwebtoken")
+const AppError = require("../../nodejonas/utils/appError")
 
+
+const signedToken = id => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN })
+}
 exports.signUp = async (req, res) => {
     try {
         // const newUser = await User.create(req.body)  security flaw with this line of code , any user can become admin 
@@ -11,8 +17,10 @@ exports.signUp = async (req, res) => {
             passwordConfirm: req.body.passwordConfirm
         })
 
+        const token = signedToken(newUser._id)
         res.status(201).json({
             status: "Success",
+            token,
             data: {
                 User: newUser
             }
@@ -23,5 +31,38 @@ exports.signUp = async (req, res) => {
             message: err.message
         })
     }
+
+}
+
+exports.login = async (req, res, next) => {
+    try {
+        const { email, password } = req.body; //i have destructured client has send this to check where credentials are correct or not
+        // 1) check if email and apssword exits 
+        if (!email || !password) {
+            throw new Error("please provide email and password!")
+        }
+        //2) check if user exits or not and password is correct   
+        const user = await User.findOne({ email }).select("+password")
+        const correct = await user.correctPassword(password, user.password)
+
+        if (!user || !correct) {
+            throw new Error("Incorrect email or password")
+            return next()
+        }
+        console.log(user)
+        //3)if everything is ok send the token to client 
+        const token = signedToken(user._id);
+        res.status(200).json({
+            status: "success",
+            token
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fails",
+            message: err.message
+        })
+    }
+    // const email = req.body.email  or
+
 
 }
