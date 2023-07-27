@@ -1,3 +1,4 @@
+const { promisify } = require("util")
 const User = require("../models/usermodel")
 const jwt = require("jsonwebtoken")
 const AppError = require("../../nodejonas/utils/appError")
@@ -40,15 +41,20 @@ exports.login = async (req, res, next) => {
         const { email, password } = req.body; //i have destructured client has send this to check where credentials are correct or not
         // 1) check if email and apssword exits 
         if (!email || !password) {
-            throw new Error("please provide email and password!")
+            return res.status(401).json({
+                status: "fail",
+                message: "Please provide email and password!"
+            });
         }
         //2) check if user exits or not and password is correct   
         const user = await User.findOne({ email }).select("+password")
         const correct = await user.correctPassword(password, user.password)
 
         if (!user || !correct) {
-            throw new Error("Incorrect email or password")
-            return next()
+            return res.status(401).json({
+                status: "fail",
+                message: "Incorrect email or password"
+            });
         }
         console.log(user)
         //3)if everything is ok send the token to client 
@@ -70,15 +76,34 @@ exports.login = async (req, res, next) => {
 
 
 exports.protect = async (req, res, next) => {
-    //1) Getting the token and check if user is there 
-    let token;
-    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-        token = req.headers.authorization.split(" ")[1]
+    try {
+        // 1) Getting the token and check if user is there 
+        let token;
+        if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+            token = req.headers.authorization.split(" ")[1];
+        }
+        if (!token) {
+            // return next(new AppError("your are not logged in", 400))
+            return res.status(400).json({
+                status: "fail",
+                message: error.message
+            });
+        }
+
+        // 2) Validate the token or verification token
+        const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+        console.log(decoded);
+
+        // 3) Check if the user still exists
+
+        // 4) If the user changed the password after the JWT was issued
+
+        // If everything is okay, allow access to the protected route
+        next();
+    } catch (err) {
+        return res.status(401).json({
+            status: "fail",
+            message: "Invalid token. Please log in again to get access."
+        });
     }
-    //2) validate the token or verification token
-
-    //3) check if user still exists
-
-    //4) if user changed password after the jwt was issued
-    next()
-}
+};
