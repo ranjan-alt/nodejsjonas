@@ -1,5 +1,6 @@
 const path = require("path");
 const express = require('express');
+const cors = require("cors")
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
@@ -14,6 +15,7 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 
 const app = express();
+app.use(cors())
 
 app.set("view engine", "pug")
 app.set("views", path.join(__dirname, "views"))
