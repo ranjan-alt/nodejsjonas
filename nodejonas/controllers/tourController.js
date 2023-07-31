@@ -62,30 +62,39 @@ exports.getTour = async (req, res) => {
 
 }
 
-exports.createTour = async (req, res) => {
+
+const catchAsync = fn => {
+    return (req, res, next) => {
+
+        fn(req, res, next).catch(next)
+    }
+}
+
+exports.createTour = catchAsync(async (req, res, next) => {
     //we can create tour based on the data which comes from  body
     // const newTour = new Tour({})
     // newTour.save()
 
     // Best way is to call create method
-    try {
-        const newTour = await Tour.create(req.body)
+    const newTour = await Tour.create(req.body)
 
-        res.status(201).json({
-            status: "success",
-            data: {
-                tour: newTour
-            }
-        })
-    } catch (err) {
-        res.status(400).json({
-            status: "fail",
-            message: "invalid data sent"
-        })
-    }
+    res.status(201).json({
+        status: "success",
+        data: {
+            tour: newTour
+        }
+    })
+    // try {
+
+    // } catch (err) {
+    //     res.status(400).json({
+    //         status: "fail",
+    //         message: "invalid data sent"
+    //     })
+    // }
 
 
-}
+})
 
 exports.updateTour = async (req, res) => {
     try {
