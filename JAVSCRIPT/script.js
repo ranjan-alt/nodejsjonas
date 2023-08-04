@@ -346,4 +346,31 @@ bookAfterUpdate
 
 // ASYNCHRONOUS JAVASCRIPT 
 
-fetch("https://jsonplaceholder.typicode.com/todos");  
+// fetch("https://jsonplaceholder.typicode.com/todos");
+// console.log("ranjan")
+
+//javascript will not wait it will execute the function(fetch) and it will move on to next line of code here   console.log
+// now the question is how we can wait and do something as soon as the data arrives
+// well this place asynchronous javascript techniques comes into play
+//  so this fetch function what returns  is called promise
+
+
+
+// fetch("https://jsonplaceholder.typicode.com/todos")
+// .then(res =>res.json())
+// .then(data=>console.log(data))
+// console.log("ranjan")
+
+//async await 
+//doing in a cleaner way 
+async function getTodos() {
+    const res = await fetch("https://jsonplaceholder.typicode.com/todos")
+    const data = res.json
+    console.log(data)
+
+}
+const todos = getTodos()
+console.log(todos)
+// by default the javascript moves on to the next line and doesnot wait for anyone
+//now with async function javascript will not move to the next line
+// and await keyword will work inside async function
