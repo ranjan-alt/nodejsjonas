@@ -162,7 +162,7 @@ console.log(title, author, genres, pages)
 //   suppose we want to sort genres then
 
 //ARRAY DESTRUCTURING example
-// const primaryGenre = genres[0]
+// const primaryGenre = genres[0] 
 // const secondaryGenre = genres[1]
 
 // const [primaryGenre, secondaryGenre] = genres
@@ -243,7 +243,7 @@ const count = book.reviews.librarything.rating ?? "no data"
 count
 
 
-// OPTIONAL CHAINING 
+// OPTIONAL CHAINING (?)
 //do this  to be on a safer side beacuse we dont know if data is present or not if its undefined the code will break
 function getTotalReviewCount(book) {
     const goodReads = book.reviews?.goodreads?.reviewsCount
@@ -284,3 +284,66 @@ essentialData
 const longBooks = data.filter((d) => d.pages > 400).filter((d) => d.hasMovieAdaptation)
 longBooks
 
+
+const adventureBooks = data.filter((books) => { return books.genres.includes("adventure") }).map((d) => d.title)
+console.log(adventureBooks)
+
+
+//Array REDUCE METHOD - very powerful but not easy 
+//bascially to reduce value to one number 
+// here number of pages of all the book comibned
+// ques --- what is accumulator doing ? use of acc? 
+//acc is just pile where we keep adding the number of pages and giving the total value 
+const pagesAllBooks = data.reduce((acc, book) => acc + book.pages, 0) // we can replace acc with sum 
+pagesAllBooks
+
+
+//Array sort Method
+// bascially the value is sorted in asending way 
+const arr = [3, 5, 6, 7, 5, 1]
+const sorted = arr.sort((a, b) => a - b) // we can also do b -a
+sorted
+arr
+// if we see that now arr is also sorted automatically 
+// we also saw that original array got changed which is mutable and its not a good idea from frontend concept 
+// before doing so we can do like this to avoid mutability 
+const correctWay = arr.slice().sort((a, b) => a - b)
+arr
+// the value will be [3,5,6,7,5,1] comment out the above sorted code 
+// with the help of slice our arr was not mutable 
+
+const sortPages = data.slice().sort((a, b) => b.pages - a.pages)
+sortPages
+
+
+//Working with immutable array(very important)
+// in react many operations need to be immutable ie how to add delete and update without mutatating the value or 
+// without changing the array 
+// 1) ADD a book object to the array 
+const newBook = {
+    id: 6,
+    title: "harry porter and the chamber of secrets",
+    author: "JK Rowling"
+}
+const booksAfterAdd = [...data, newBook]   //spread the old one and add new one in case of addition
+booksAfterAdd
+
+// 2) DELETE the book from an array 
+//always create new array so that original array is not mutatated
+const bookAfterDelete = booksAfterAdd.filter((data) => data.id !== 3)
+bookAfterDelete
+//here manually deleted 3 we could just write a function and we could pass the id in that function 
+//  so final code would be (data.id !== id)
+
+//3) UPDATE the book object in an array 
+// we use map method and we use spread operator i.e taking old array value and adding new one to the selected array here 1
+
+const bookAfterUpdate = bookAfterDelete.map((data) => data.id === 1 ? { ...data, pages: 1210 } : data)
+bookAfterUpdate
+
+// ---------------------------------- -----------------------------------------------------------------------------------
+
+
+// ASYNCHRONOUS JAVASCRIPT 
+
+fetch("https://jsonplaceholder.typicode.com/todos");  
