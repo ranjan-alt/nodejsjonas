@@ -1,5 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
+import Counter from './components/Counter/counter';
+import FarAway from './components/FarAwayVideo70/FarAway';
 import Steps from "./components/Steps-Project/Steps"
 
 function App() {
@@ -7,7 +9,9 @@ function App() {
     <div className="App">
       {/* <Login />
       <Test /> */}
-      <Steps />
+      {/* <Steps /> */}
+      {/* <Counter /> */}
+      <FarAway />
     </div>
   );
 }
