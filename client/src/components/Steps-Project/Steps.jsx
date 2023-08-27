@@ -12,11 +12,11 @@ const Steps = () => {
     console.log(step)
 
     function handlePrevious() {
-        if (step < 3)
+        if (step > 1)
             setStep(step - 1)
     }
     function handleNext() {
-        if (step > 1) setStep(step + 1)
+        if (step < 3) setStep(step + 1)
     }
     return (
         <>
@@ -32,12 +32,28 @@ const Steps = () => {
                     {/* very important step  */}
                     <p>Step:{step}:{messages[step - 1]}</p>
 
-                    <button style={{ backgroundColor: "#7950f2", color: "#ffff" }} onClick={() => handlePrevious}>Previous</button>
-                    <button style={{ backgroundColor: "#7950f2", color: "#ffff" }} onClick={() => handleNext} >Next</button>
+                    <Button bgColor="#7950f2"
+                        textColor="#ffff"
+                        onClick={handlePrevious}
+                        text="Previous" />
+                    <Button bgColor="#7950f2"
+                        textColor="#ffff"
+                        onClick={handleNext}
+                        text="Next"
+                    />
+
+                    {/* <button style={{ backgroundColor: "#7950f2", color: "#ffff" }} onClick={() => handlePrevious}>Previous</button> */}
+                    {/* <button style={{ backgroundColor: "#7950f2", color: "#ffff" }} onClick={() => handleNext} >Next</button> */}
 
                 </div>
             }
         </>
+    )
+}
+
+function Button({ bgColor, textColor, onClick, text }) {
+    return (
+        <button style={{ backgroundColor: bgColor, color: textColor }} onClick={onClick} >{text}</button>
     )
 }
 

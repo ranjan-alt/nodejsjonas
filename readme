@@ -26,3 +26,5 @@
 // far away project of section 6 is used in section 7
 // section 7 is very important
 // by lifitng state up we can share one piece of state with multiple components in different positions of component tree
+
+//video lectur 91 learn about children prop
