@@ -1,8 +1,9 @@
 // import logo from './logo.svg';
 import './App.css';
-import Counter from './components/Counter/counter';
-import FarAway from './components/FarAwayVideo70/FarAway';
-import Steps from "./components/Steps-Project/Steps"
+// import Counter from './components/Counter/counter';
+// import FarAway from './components/FarAwayVideo70/FarAway';
+// import Steps from "./components/Steps-Project/Steps";
+import Accordian from './components/Accordian/Accordian';
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
       <Test /> */}
       {/* <Steps /> */}
       {/* <Counter /> */}
-      <FarAway />
+      {/* <FarAway /> */}
+      <Accordian />
     </div>
   );
 }
