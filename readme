@@ -1,6 +1,8 @@
 //question shall we write writefile or writefilesync ?? [Event Loop Lecture]
 //section6 lecture of nodejs is very important
 
+import { useReducer } from "react"
+
 //env variables - express apps can run on different env like development or prod and different databases
 // - by dafult express sets up in development
 
@@ -27,12 +29,12 @@
 
 //video lectur 91 learn about children prop
 
-UseEffect ----------->>
-// starting with section 12 effect and data fetching
-// video 143 useEffect to the rescue - dont directly fetch the api data inside render it will go into infinite loop rather use inside useEffect
-//by default effects run after every render. we can prevent that by passing a dependency array
-//without dependency array , React doesnt know when to run the effect
-every state variable and prop used inside the effect must be included in dependency array
+UseEffect----------->>
+    // starting with section 12 effect and data fetching
+    // video 143 useEffect to the rescue - dont directly fetch the api data inside render it will go into infinite loop rather use inside useEffect
+    //by default effects run after every render. we can prevent that by passing a dependency array
+    //without dependency array , React doesnt know when to run the effect
+    every state variable and prop used inside the effect must be included in dependency array
 
 useReducer hook is a pure function which takes previous state and action it will then return the next state
 when components have a lot of statevariables and state updates spread across many event handlers all over the component
@@ -43,36 +45,56 @@ when updating one piece of state depends on one or multiple other pieces of stat
 //reducer are pure function - no sideEffects that takes current state and action and returns the next state
 action describes how to update the state
 
-function reducer(state, action){
-switch(action.type){
-case:"INC":
-return state+1
-}
+function reducer(state, action) {
+    switch (action.type) {
+        case: "INC":
+            return state + 1
+    }
 }
 
 dispatch function tigger updates by sending action from event handler to the reducer
-const[state,dispatch] = useReducer(reducer, initialState)
+const [state, dispatch] = useReducer(reducer, initialState)
 
 flow
 update state in a component
+    |
 |
+    dispatch--------------> reducer it will take current state and the action-------------------------> re - render
+        |  
 |
-dispatch--------------> reducer it will take current state and the action ------------------------->re-render
-|  
-|
-----------------------------it will return next state
+        ----------------------------it will return next state
 action
-type="updateDay"
+type = "updateDay"
 payload 23
 
 bank example
 customer is the dispatcher - who request the update
 Bank Manager is the reducer - who make the update
-valut = is the state ----- What needs to be updated
+valut = is the state----- What needs to be updated
 
-action ------------>
-type:"withdraw"
-payload:{
-amount:5000,
-accountNum: 1234567890  
- }
+action------------>
+    type: "withdraw"
+payload: {
+    amount: 5000,
+        accountNum: 1234567890
+}
+
+
+Redux
+//  i redux we have-------------->
+
+    event handler-------------> dispatch-------> STORE - all Global state lives in the centralise container-- > NEXT STATE-- -> rerender
+
+
+//  but we studied in useReducer
+
+ event handler---------------> dispatch(customer)-------> reducer(Bank Manager)---------------> NEXT STATE--------> re - render
+
+
+
+redux contd----
+
+    eventHandler-- -> Action creator function ---> dispatch-- -> STORE----> NEXT STATE----> RE - RENDER
+        in store multiple reducer can live 
+ why multiple reducer in one store
+eg - shopping cart one reducer for cart one for user and one for color theme
