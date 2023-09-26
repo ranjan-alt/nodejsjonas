@@ -1,6 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
-import ReactQuiz from './components/useReducerHook/ReactQuiz/ReactQuiz';
+import BankAccount from './components/useReducerHook/BankAccount';
+// import ReactQuiz from './components/useReducerHook/ReactQuiz/ReactQuiz';
 // import DateCounter from './components/useReducerHook/ReducerProject2';
 // import Counter from './components/Counter/counter';
 // import FarAway from './components/FarAwayVideo70/FarAway';
@@ -17,7 +18,8 @@ function App() {
       {/* <FarAway /> */}
       {/* <Accordian /> */}
       {/* <DateCounter /> */}
-      <ReactQuiz />
+      {/* <ReactQuiz /> */}
+      <BankAccount />
     </div>
   );
 }
