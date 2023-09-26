@@ -86,7 +86,7 @@ function ReactQuiz() {
     const numQuestions = questions.length
     const maxPossiblePoints = questions.reduce((prev, cur) => prev + cur.points, 0)
     useEffect(() => {
-        fetch("http://localhost:8000/questions")
+        fetch("https://question-foi7.onrender.com/questions")
             .then(res => res.json())
             .then(data => dispatch({ type: "dataRecieved", payload: data }))  // here we created data recived event to which our reducer will respond we will also send payload or information to the reducer so that it can compute the next state 
             .catch((err) => dispatch({ type: "dataFailed" }))
