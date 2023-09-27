@@ -80,8 +80,10 @@ payload: {
 }
 
 
-Redux
-//  i redux we have-------------->
+
+
+------------------------------------------- Redux------------------------------------------------------------------------------------
+    //  i redux we have-------------->
 
     event handler-------------> dispatch-------> STORE - all Global state lives in the centralise container-- > NEXT STATE-- -> rerender
 
@@ -98,3 +100,9 @@ redux contd----
         in store multiple reducer can live 
  why multiple reducer in one store
 eg - shopping cart one reducer for cart one for user and one for color theme
+
+
+
+start from video 271 i.e redux api call 
+
+meanwhile start practice on useReducer and useContext hook
