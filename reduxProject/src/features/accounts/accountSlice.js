@@ -34,8 +34,17 @@ export default function accountReducer(state = initialState, action) {
 
 
 
-export function deposit(amount) {
-    return { type: "account/deposit", payload: amount }
+export function deposit(amount, currency) {
+    if (currency === "USD")
+        return { type: "account/deposit", payload: amount }
+
+    return function (dispatch, getState) {
+        //API Call
+
+
+
+        // return action
+    }
 }
 
 export function withdraw(amount) {

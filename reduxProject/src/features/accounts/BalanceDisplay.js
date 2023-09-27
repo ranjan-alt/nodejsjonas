@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import thunk from "redux-thunk"
 
 function formatCurrency(value) {
     return new Intl.NumberFormat("en", {
