@@ -22,6 +22,7 @@ const initialState = {
     secondsRemaining: null,
 }
 
+
 function reducer(state, action) {
     switch (action.type) {
         case "dataRecieved":             //this is the cation we are going to dispatch as soon as we have data
