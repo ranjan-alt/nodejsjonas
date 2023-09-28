@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
-import { ResumeProvider } from './components/resumecontext';
-import PersonalInfo from './components/PersonalInfo';
+import { ResumeProvider } from './components/reusmeProject/resumecontext';
+import PersonalInfo from './components/reusmeProject/PersonalInfo';
 
 function App() {
   return (
