@@ -2,7 +2,7 @@
 import './App.css';
 // import { ResumeProvider } from './components/reusmeProject/resumecontext';
 // import PersonalInfo from './components/reusmeProject/PersonalInfo';
-import UseReducerExample from './components/Practice/UsereducerExample';
+import UseReducerExample from './components/useReduerHookSimple/UsereducerExample';
 
 function App() {
   return (
