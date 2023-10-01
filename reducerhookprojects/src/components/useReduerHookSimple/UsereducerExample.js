@@ -3,8 +3,7 @@
 
 import React from 'react';
 import { useReducer } from "react";
-// import { reducer } from "../reusmeProject/reducer"
-import { func } from "prop-types"
+
 const initialState = {
 
     name: "",

@@ -1,8 +1,10 @@
 // import logo from './logo.svg';
 import './App.css';
+import AppProvider from './components/useContextExample/AppProvider';
+import Customer from './components/useContextExample/Customer';
 // import { ResumeProvider } from './components/reusmeProject/resumecontext';
 // import PersonalInfo from './components/reusmeProject/PersonalInfo';
-import UseReducerExample from './components/useReduerHookSimple/UsereducerExample';
+// import UseReducerExample from './components/useReduerHookSimple/UsereducerExample';
 
 function App() {
   return (
@@ -14,7 +16,11 @@ function App() {
 
     <div className="App">
       {/* child component */}
-      <UseReducerExample />
+      {/* <UseReducerExample /> */}
+      <AppProvider>
+        <Customer />
+      </AppProvider>
+
     </div>
 
   );
