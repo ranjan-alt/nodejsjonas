@@ -10,11 +10,15 @@ function RapidApi() {
         // Define the API request configuration
         const options = {
             method: 'GET',
-            url: 'https://the-cocktail-db.p.rapidapi.com/search.php',
-            params: { s: 'vodka' },
+            url: 'https://bmi-calculator6.p.rapidapi.com/bmi',
+            params: {
+                height: '184',
+                weight: '86',
+                system: 'metric'
+            },
             headers: {
                 'X-RapidAPI-Key': 'dd221bb2c7mshaf333f0227cfca6p175860jsn2444264fbad8',
-                'X-RapidAPI-Host': 'the-cocktail-db.p.rapidapi.com',
+                'X-RapidAPI-Host': 'bmi-calculator6.p.rapidapi.com'
             },
         };
 
