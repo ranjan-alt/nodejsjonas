@@ -1,0 +1,19 @@
+// // we can use const express = require("express")  but since with recent es6 module we can use Import
+// // most important thing is to add "type":"module" in package.json file
+// soemthing like this
+// {
+//     "name": "server",
+//     "version": "1.0.0",
+//     "description": "",
+//     "main": "server.js",
+//     "type": "module",
+//     "scripts": {
+//       "test": "echo \"Error: no test specified\" && exit 1"
+//     },
+//     "keywords": [],
+//     "author": "",
+//     "license": "ISC",
+//     "dependencies": {
+//       "express": "^4.18.2"
+//     }
+//   }
