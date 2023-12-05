@@ -7,6 +7,8 @@ import { useState } from "react"
 // ie NAME field 
 
 // ab mai ek hi object pass kroonga backend me jo bhi user fill krega
+
+import { addUser } from "../service/api"
 const AddUser = () => {
 
     const defaultValue = {
@@ -23,6 +25,11 @@ const AddUser = () => {
         console.log(e.target.name, e.target.value) // jaise maine yahan value nikala hai wasie hi mai name nikal sakta hoon 
         setUser({ ...user, [e.target.name]: e.target.value }) //...user isliay likha ki wo key ko replace na kr de try this
         console.log(user)
+    }
+
+    const addUserDetails = async () => {
+        //iske andar api call krnge but uske liay api function banna padega or wo hum service k andar rakhnge sare api ko
+        await addUser(user)
     }
     return (
         <>
@@ -45,7 +52,7 @@ const AddUser = () => {
                     <Input onChange={(e) => onValueChange(e)} name="phone" />
                 </FormControl>
                 <FormControl>
-                    <Button variant="contained">Add user</Button>
+                    <Button variant="contained" onClick={() => addUserDetails()}>Add user</Button>
                 </FormControl>
             </FormGroup>
         </>
