@@ -13,4 +13,4 @@ const User = mongoose.model("user", userSchema)
 module.exports = User
 
 
-// module.exports ={User}  dont do {} in schema file as it will say user is not a constructor
+// module.exports ={User}  dont do {} in schema file as it will say user is not a constructornjan

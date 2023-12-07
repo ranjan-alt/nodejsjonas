@@ -9,9 +9,11 @@ import { useState } from "react"
 // ab mai ek hi object pass kroonga backend me jo bhi user fill krega
 
 import { addUser } from "../service/api";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const AddUser = () => {
+
+const EditUser = () => {
 
     const defaultValue = {
         name: "",
@@ -24,7 +26,7 @@ const AddUser = () => {
 
     const [user, setUser] = useState(defaultValue)
 
-    const navigate = useNavigate()
+    const navigate = useNavigate
     const onValueChange = (e) => {                 //e ko jab console krenge tb hme bhot sare prototype milte hai jisme name and value hota hai 
         console.log(e.target.name, e.target.value) // jaise maine yahan value nikala hai wasie hi mai name nikal sakta hoon 
         setUser({ ...user, [e.target.name]: e.target.value }) //...user isliay likha ki wo key ko replace na kr de try this
@@ -34,7 +36,7 @@ const AddUser = () => {
     const addUserDetails = async () => {
         //iske andar api call krnge but uske liay api function banna padega or wo hum service k andar rakhnge sare api ko
         await addUser(user)
-        navigate("/alluser")
+        navigate("/all")
     }
     return (
         <>
@@ -57,11 +59,11 @@ const AddUser = () => {
                     <Input onChange={(e) => onValueChange(e)} name="phone" />
                 </FormControl>
                 <FormControl>
-                    <Button variant="contained" onClick={() => addUserDetails()}>Add user</Button>
+                    <Button variant="contained" onClick={() => addUserDetails()}>Edit</Button>
                 </FormControl>
             </FormGroup>
         </>
     )
 }
 
-export default AddUser
+export default EditUser

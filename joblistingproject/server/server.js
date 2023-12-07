@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true })) // jo url me space hota hai t
 app.use(cors())
 app.use("/", Routes)
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 8000
 
 const username = process.env.DB_USERNAME
 const password = process.env.DB_PASSWORD

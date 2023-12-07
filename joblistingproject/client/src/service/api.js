@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "http://localhost:3000";
+const URL = "http://localhost:8000";
 
 export const addUser = async (data) => {
     try {
@@ -9,5 +9,14 @@ export const addUser = async (data) => {
 
     } catch (error) {
         console.log("Error while calling the api", error)
+    }
+}
+
+
+export const getUsers = async (data) => {           //since ye ek promise return krega isliay hme async await lagana padega
+    try {
+        return await axios.get(`${URL}/all`)            ///yahan pe data return krega
+    } catch (error) {
+        console.log("Error while fetching data", error)
     }
 }

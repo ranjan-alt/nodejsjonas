@@ -20,6 +20,16 @@ const addUser = async (request, response) => {
 
 }
 
+const getUsers = async (request, response) => {       // since ye hmara get api hai so request ka yahan pe koi kam nahi hai koi body nahi hai headers nahi hai 
+    //response me mko data sned krna hai or kon sa data send krna hai  or kon se collection me se niaklna hai wo hmare userschema me define kia hua hai 
+    try {
+        const users = await User.find({})                        //hmne empty chora hua hai wo sara data nikal dega 
+        response.status(200).json(users)                  //direct reponse send kr denge
+    } catch (error) {
+        response.status(404).json({ message: error.message })
+    }
+}
 
-module.exports = { addUser }
+
+module.exports = { addUser, getUsers }
 
