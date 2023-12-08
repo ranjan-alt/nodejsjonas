@@ -1,3 +1,4 @@
+const { response, request } = require("express")
 const User = require("../schema/user-schema")
 
 
@@ -30,6 +31,35 @@ const getUsers = async (request, response) => {       // since ye hmara get api 
     }
 }
 
+const getUser = async (request, response) => {
+    console.log(request.params)
+    try {
+        const users = await User.find({ _id: request.params.id })                        //hmne empty chora hua hai wo sara data nikal dega 
+        response.status(200).json(users)                  //direct reponse send kr denge
+    } catch (error) {
+        response.status(404).json({ message: error.message })
+    }
+}
 
-module.exports = { addUser, getUsers }
+const editUser = async (request, response) => {
+    let user = request.body;
+    const editUser = new User(user)
+    try {
+        await User.updateOne({ _id: request.params.id }, editUser)
+        response.status(201).json(editUser)
+    } catch (error) {
+        response.status(409).json({ message: error.message })
+    }
+}
+
+const deleteUser = async (request, response) => {
+    try {
+        await User.deleteOne({ _id: request.params.id })
+        response.status(409).json({ message: "User deleted Successfully" })
+    } catch (error) {
+        response.status(409).json({ message: error.message })
+    }
+}
+
+module.exports = { addUser, getUsers, getUser, editUser, deleteUser }
 
