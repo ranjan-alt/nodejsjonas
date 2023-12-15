@@ -8,7 +8,9 @@ import { useState } from "react"
 
 // ab mai ek hi object pass kroonga backend me jo bhi user fill krega
 
-import { addUser } from "../service/api"
+import { addUser } from "../service/api";
+import { useNavigate } from "react-router-dom";
+
 const AddUser = () => {
 
     const defaultValue = {
@@ -21,6 +23,8 @@ const AddUser = () => {
     // yahan pe key:value dono varilable hai isliay hme key ko square bracket me dalna padega
 
     const [user, setUser] = useState(defaultValue)
+
+    const navigate = useNavigate()
     const onValueChange = (e) => {                 //e ko jab console krenge tb hme bhot sare prototype milte hai jisme name and value hota hai 
         console.log(e.target.name, e.target.value) // jaise maine yahan value nikala hai wasie hi mai name nikal sakta hoon 
         setUser({ ...user, [e.target.name]: e.target.value }) //...user isliay likha ki wo key ko replace na kr de try this
@@ -30,6 +34,7 @@ const AddUser = () => {
     const addUserDetails = async () => {
         //iske andar api call krnge but uske liay api function banna padega or wo hum service k andar rakhnge sare api ko
         await addUser(user)
+        navigate("/alluser")
     }
     return (
         <>

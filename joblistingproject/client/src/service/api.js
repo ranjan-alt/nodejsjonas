@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "http://localhost:3000";
+const URL = "http://localhost:8000";
 
 export const addUser = async (data) => {
     try {
@@ -9,5 +9,40 @@ export const addUser = async (data) => {
 
     } catch (error) {
         console.log("Error while calling the api", error)
+    }
+}
+
+
+export const getUsers = async (data) => {           //since ye ek promise return krega isliay hme async await lagana padega
+    try {
+        return await axios.get(`${URL}/all`)            ///yahan pe data return krega
+    } catch (error) {
+        console.log("Error while fetching data", error)
+    }
+}
+
+export const getUser = async (id) => {
+    try {
+        return await axios.get(`${URL}/${id}`)
+    } catch (error) {
+        console.log("Error while calling get user api ", error)
+    }
+}
+
+export const editUser = async (user, id) => {
+    try {
+        return await axios.post(`${URL}/${id}`, user)
+    } catch (error) {
+        console.log("error while calling edituser api", error)
+    }
+}
+
+
+export const deleteUser = async (id) => {
+    try {
+        return await axios.delete(`${URL}/${id}`)
+
+    } catch (error) {
+        console.log("error while calling delete user api", error)
     }
 }

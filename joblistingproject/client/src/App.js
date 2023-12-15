@@ -7,6 +7,7 @@ import AllUser from './components/AllUser';
 
 //router config 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import EditUser from './components/EditUser';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <Route path='/' element={<CodeForInterview />} />
         <Route path="/alluser" element={<AllUser />} />
         <Route path="/adduser" element={<AddUser />} />
-
+        <Route path="/edituser/:id" element={<EditUser />} />
       </Routes>
 
     </BrowserRouter>
