@@ -1,11 +1,14 @@
-const express = require("express")
+const express = require("express");
+const connectToDatabase = require("./database/db.js");
+const app = express();
 
-const app = express()
+const PORT = 8000;
 
+// Connect to the database
+connectToDatabase();
 
-const PORT = 8000
+// Set up your routes and middleware here
+
 app.listen(PORT, () => {
-    console.log(`your server is running on port ${PORT}`)
-})
-
-
+    console.log("Your server is running on port " + PORT);
+});
