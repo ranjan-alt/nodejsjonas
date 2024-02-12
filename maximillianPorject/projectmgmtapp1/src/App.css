@@ -1,0 +1,11 @@
+.mainclass {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.newProject {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

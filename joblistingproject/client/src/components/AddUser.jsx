@@ -25,6 +25,7 @@ const AddUser = () => {
     const [user, setUser] = useState(defaultValue)
 
     const navigate = useNavigate()
+
     const onValueChange = (e) => {                 //e ko jab console krenge tb hme bhot sare prototype milte hai jisme name and value hota hai 
         console.log(e.target.name, e.target.value) // jaise maine yahan value nikala hai wasie hi mai name nikal sakta hoon 
         setUser({ ...user, [e.target.name]: e.target.value }) //...user isliay likha ki wo key ko replace na kr de try this
