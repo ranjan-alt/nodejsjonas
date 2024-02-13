@@ -2,6 +2,8 @@
 import './App.css';
 // import Login from './components/LoginProjectReducer/Login';
 import RapidApi from './components/RapidApi/RapidApi';
+import ReducerExampleOne from './components/UseReducerExample/ReducerExampleOne';
+import ExampleOne from './components/UseReducerExample/SimpleExampleOne';
 // import AppProvider from './components/useContextExample/AppProvider';
 // import Customer from './components/useContextExample/Customer';
 // import { ResumeProvider } from './components/reusmeProject/resumecontext';
@@ -27,7 +29,9 @@ function App() {
 
     <div className="App">
       {/* <Login /> */}
-      <RapidApi />
+      {/* <RapidApi /> */}
+      {/* <ExampleOne /> */}
+      <ReducerExampleOne />
     </div>
 
   );
