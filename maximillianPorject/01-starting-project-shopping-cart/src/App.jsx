@@ -11,7 +11,7 @@ function App() {
   });
 
   function handleAddItemToCart(id) {
-    setShoppingCart((prevShoppingCart) => {
+    setShoppingCart((prevShoppingCart) => {                      //here setshopping cart is called a callback to the handleAddItemToCart 
       console.log(prevShoppingCart, "ranjan")
       const updatedItems = [...prevShoppingCart.items];
       console.log(updatedItems, "kumar")
@@ -19,7 +19,7 @@ function App() {
       const existingCartItemIndex = updatedItems.findIndex(
         (cartItem) => cartItem.id === id
       );
-      const existingCartItem = updatedItems[existingCartItemIndex];
+      const existingCartItem = updatedItems[existingCartItemIndex]; // to accesss the specific item in the index
       console.log(existingCartItem, "existing")
 
       if (existingCartItem) {
