@@ -16,6 +16,7 @@ const ThemeProvider = ({ children }) => {
 };
 
 export { ThemeContext, ThemeProvider }; ///dont use export default just write export
+
 // export const useTheme = () => {
 //   return useContext(ThemeContext);
 // };

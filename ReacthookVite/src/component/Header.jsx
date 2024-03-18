@@ -15,7 +15,7 @@ const Header = () => {
         Header
       </h1>
       <button
-        onClick={toggleTheme}
+        onClick={() => toggleTheme()}
         style={{
           backgroundColor: theme === "light" ? "#333" : "#f0f0f0",
           color: theme === "light" ? "#f0f0f0" : "#333",

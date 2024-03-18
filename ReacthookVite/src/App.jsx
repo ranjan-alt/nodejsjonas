@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import { ThemeProvider, ThemeContext } from "./context/ThemeContext";
 import Header from "./component/Header";
+import Main from "./component/Main";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -12,6 +13,7 @@ function App() {
     <ThemeProvider>
       <>
         <Header />
+        <Main />
       </>
     </ThemeProvider>
   );
