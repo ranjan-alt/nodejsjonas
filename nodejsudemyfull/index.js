@@ -1,4 +1,16 @@
 const fs = require("fs");
 
-const hello = "hello world";
-console.log(hello);
+console.log("script started");
+try {
+  const text = fs.readFileSync("./txt/main.txt", "utf-8");
+  // this read filesync is a synchronous in nature
+  console.log("file read succesffuly");
+
+  console.log(text);
+} catch (error) {
+  console.error("error reading file", error);
+}
+console.log("script ended");
+
+const textOut = `this is new line ${text} .\n created on ${Data.now()}`;
+fs.writeFileSync("./txt/output.txt", textOut);
