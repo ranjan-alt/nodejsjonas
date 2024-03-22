@@ -1,5 +1,7 @@
 const fs = require("fs");
+const http = require("http");
 
+// synchronous or blocking way
 // console.log("script started");
 // try {
 //   const text = fs.readFileSync("./txt/main.txt", "utf-8");
@@ -15,9 +17,15 @@ const fs = require("fs");
 // const textOut = `this is new line ${text} .created on ${Data.now()}`;
 // fs.writeFileSync("./txt/output.txt", textOut);
 
-fs.readFile("./txt/main.txt","utf-8", (err,data)=>{
-  console.log(data)
-})
+// non blocking or asynchronous way
+fs.readFile("./txt/main.txt", "utf-8", (err, data) => {
+  console.log(data);
+});
 
+// Server
 
+const server = http.createServer((req, res) => {
+  res.send("hello form the server");
+});
 
+server.listen(8000);
