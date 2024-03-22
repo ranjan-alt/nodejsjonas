@@ -28,4 +28,8 @@ const server = http.createServer((req, res) => {
   res.send("hello form the server");
 });
 
-server.listen(8000);
+server.listen(8000, "127.0.0.0", () => {
+  console.log("Listning on port 8000");
+});
+
+
