@@ -1,5 +1,6 @@
 const fs = require("fs");
 const http = require("http");
+const url = require("url")
 
 // synchronous or blocking way
 // console.log("script started");
@@ -25,6 +26,7 @@ fs.readFile("./txt/main.txt", "utf-8", (err, data) => {
 // Server
 
 const server = http.createServer((req, res) => {
+ console.log(req.url)
   res.send("hello form the server");
 });
 
