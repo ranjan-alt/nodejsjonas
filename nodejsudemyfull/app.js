@@ -1,31 +1,20 @@
 const fs = require("fs")
 const express = require("express")
+const { create } = require("domain")
 
 const app = express()
 
 app.use(express.json())
 
-
-// GET METHOD 
-// either send data or send data as json 
-// app.get("/", (req, res) => {
-//     res.send("hello for the server")
-// })
-// app.get("/", (req, res) => {
-//     res.status(200).json({ message: "hello from the server", app: "ranjanapps   " });
-// })
-
-
-// //POST METHOD
-// app.post("/", (req, res) => {
-//     res.send("You can post to this endpoint")
-// })
-
-
+app.use((req, res, next) => {
+    console.log("hello from the middleware")
+    next()
+})
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/txt/data.json`))
 console.log(tours)
 
-app.get("/api/v1/tours", (req, res) => {
+
+const getAllTours = (req, res) => {
 
     res.status(200).json({
         status: "success",
@@ -34,24 +23,10 @@ app.get("/api/v1/tours", (req, res) => {
             tours
         }
     })
-})
+}
 
-app.post("/api/v1/tours", (req, res) => {
-    console.log(req.body)
-    const newId = tours[tours.length - 1] + 1
-    const newTour = Object.assign({ id: newId }, req.body)
-    tours.push(newTour)
-    fs.writeFile(`${__dirname}/txt/data.json`, JSON.stringify(tours), err => {
-        res.status(201).json({
-            status: "success",
-            data: {
-                tour: newTour
-            }
-        })
-    })
-})
 
-app.get("/api/v1/tours/:id", (req, res) => {   //here we have created a variable call id 
+const getTour = (req, res) => {   //here we have created a variable call id 
     console.log(req.params) // this variable is stored in params
     const id = req.params.id * 1
     if (id > tours.length) {
@@ -70,13 +45,62 @@ app.get("/api/v1/tours/:id", (req, res) => {   //here we have created a variable
         }
     })
 
-})
+}
+
+const createTour = (req, res) => {
+    console.log(req.body)
+    const newId = tours[tours.length - 1] + 1
+    const newTour = Object.assign({ id: newId }, req.body)
+    tours.push(newTour)
+    fs.writeFile(`${__dirname}/txt/data.json`, JSON.stringify(tours), err => {
+        res.status(201).json({
+            status: "success",
+            data: {
+                tour: newTour
+            }
+        })
+    })
+}
 
 
-//PATCH 
-app.patch("/api/v1/tours/:id", (req, res) => {
+const updateTour = (req, res) => {
+    if (req.params.id * 1 > tours.length) {
+        return res.status(404).json({
+            status: "fail",
+            message: "Invalid id"
+        })
+    }
+    res.status(200).json({
+        status: "success",
+        data: {
+            tour: "<updated tour here/>"
+        }
+    })
+}
 
-})
+
+const deleteTour = (req, res) => {
+    if (req.params.id * 1 > tours.length) {
+        return res.status(404).json({
+            status: "fail",
+            message: "Invalid id"
+        })
+    }
+    res.status(200).json({
+        status: "success",
+        data: null
+    })
+}
+
+// app.get("/api/v1/tours", getAllTours)
+// app.get("/api/v1/tours/:id", getTour)
+// app.post("/api/v1/tours", createTour)
+// app.patch("/api/v1/tours/:id", updateTour)
+// app.delete("/api/v1/tours/:id", deleteTour)
+
+app.route("/api/v1/tours").get(getAllTours).post(createTour)
+app.route("/api/v1/tours/:id").get(getTour).patch(updateTour).delete(deleteTour)
+
 
 const port = 3000
 app.listen(port, () => {
