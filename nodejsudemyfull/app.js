@@ -73,6 +73,11 @@ app.get("/api/v1/tours/:id", (req, res) => {   //here we have created a variable
 })
 
 
+//PATCH 
+app.patch("/api/v1/tours/:id", (req, res) => {
+
+})
+
 const port = 3000
 app.listen(port, () => {
     console.log(`app running on port ${port} `)
