@@ -1,10 +1,12 @@
 const fs = require("fs")
 const express = require("express")
-const { create } = require("domain")
+const morgan = require("morgan")
+
 
 const app = express()
 
-app.use(express.json())
+app.use(morgan("dev"))  // we can aslo write tiny
+app.use(express.json())  // in order to parse data from the body
 
 app.use((req, res, next) => {
     console.log("hello from the middleware")
