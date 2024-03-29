@@ -143,14 +143,27 @@ const deleteUser = () => {
 // app.patch("/api/v1/tours/:id", updateTour)
 // app.delete("/api/v1/tours/:id", deleteTour)
 
-app.route("/api/v1/tours").get(getAllTours).post(createTour)
-app.route("/api/v1/tours/:id").get(getTour).patch(updateTour).delete(deleteTour)
+
+const tourRouter = express.Router()
+const userRoute = express.Router()
+
+
+tourRouter.route("/").get(getAllTours).post(createTour)
+tourRouter.route("/:id").get(getTour).patch(updateTour).delete(deleteTour)
 
 
 //user routes
-app.route("/api/v1/users").get(getAllUsers).post(createUser)
-app.route("/api/v1/users/:id").get(getUser).patch(updateUser).delete(deleteUser)
+userRoute.route("/").get(getAllUsers).post(createUser)
+userRoute.route("/:id").get(getUser).patch(updateUser).delete(deleteUser)
 
+
+app.use("/api/v1/tour", tourRouter)
+app.use("/api/v1/users", userRoute)
+
+
+
+
+// start server
 const port = 3000
 app.listen(port, () => {
     console.log(`app running on port ${port} `)
