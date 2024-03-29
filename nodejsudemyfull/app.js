@@ -6,8 +6,14 @@ const userRouter = require("./routes/userRoutes")
 
 const app = express()
 
-app.use(morgan("dev"))  // we can aslo write tiny
+
+if (process.env.NODE_ENV === "development") {
+    app.use(morgan("dev"))  // we can aslo write tiny
+}
+
+
 app.use(express.json())  // in order to parse data from the body
+app.use(express.static(`${__dirname}/public`))
 
 app.use((req, res, next) => {
     console.log("hello from the middleware")
