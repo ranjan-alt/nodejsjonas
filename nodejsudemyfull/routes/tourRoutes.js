@@ -6,7 +6,7 @@ const tourRouter = express.Router()
 
 
 //param middleware
-tourRouter.param("id", tourController.checkId)
+// tourRouter.param("id", tourController.checkId)
 
 //create a checkbody middleware function 
 // check if body contains the name and price property
@@ -14,7 +14,7 @@ tourRouter.param("id", tourController.checkId)
 // add it to post handlerstack
 
 
-tourRouter.route("/").get(tourController.getAllTours).post(tourController.checkBody, tourController.createTour)
+tourRouter.route("/").get(tourController.getAllTours).post(tourController.createTour)
 tourRouter.route("/:id").get(tourController.getTour).patch(tourController.updateTour).delete(tourController.deleteTour)
 
 module.exports = tourRouter
