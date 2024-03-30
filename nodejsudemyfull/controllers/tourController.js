@@ -38,8 +38,8 @@ exports.getAllTours = async (req, res) => {
     //     }
     // })
     try {
-
-        const tours = await Tour.find();
+        console.log(req.query)
+        const tours = await Tour.find(req.query);
         res.status(200).json({
             status: "succes",
             result: tours.length,
@@ -69,6 +69,7 @@ exports.getTour = async (req, res) => {   //here we have created a variable call
     // })
 
     try {
+
         const tour = await Tour.findById(req.params.id)         /// how can we get acccess to id ? req.params.id simple
         // Tour.findOne({ _id: req.params.id })
         res.status(200).json({
@@ -132,7 +133,7 @@ exports.updateTour = async (req, res) => {
 
 
     try {
-        const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
         res.status(200).json({
             status: "sccess",
             data: {
@@ -148,10 +149,19 @@ exports.updateTour = async (req, res) => {
 }
 
 
-exports.deleteTour = (req, res) => {
+exports.deleteTour = async (req, res) => {
+    try {
 
-    res.status(200).json({
-        status: "success",
-        data: null
-    })
+        const tour = await Tour.findByIdAndDelete(req.params.id)
+
+        res.status(200).json({
+            status: "success",
+            data: { tour }
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            message: err
+        })
+    }
 }
