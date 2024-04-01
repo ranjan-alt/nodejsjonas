@@ -1,4 +1,5 @@
 // const fs = require("fs")
+const QueryString = require("qs")
 const Tour = require("./../models/tourModel")
 
 // const tours = JSON.parse(fs.readFileSync(`${__dirname}/../txt/data.json`))
@@ -38,8 +39,63 @@ exports.getAllTours = async (req, res) => {
     //     }
     // })
     try {
+        //Build query
+        // 1)Filtering 
         console.log(req.query)
-        const tours = await Tour.find(req.query);
+        const queryObj = { ...req.query }
+        const excludeFields = ["page", "sort", "limit", "fields"] //we will include these incoming videos but right now we want to exclude
+        // these fields and for this we will loop these in queryObj
+
+        excludeFields.forEach(el => delete queryObj[el])
+        console.log(req.query, queryObj)
+
+
+        // 2) Advance filtering
+        //{difficulty:"easy", duration:{$gte:5}}
+        // { difficulty: 'easy', durations: { gte: '4' }
+        //gte, gt, lte, lt
+        // first i will convert object into string
+        let queryString = JSON.stringify(queryObj)
+        queryString = queryString.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`)
+        console.log(JSON.parse(queryString))
+
+
+
+        //execute query
+        let query = await Tour.find(JSON.parse(queryString));
+
+
+        //SORTING  not working
+        // if (req.query.sort) {
+        //     console.log(req.query.sort)
+        //     const sortBy = req.query.sort.split(",").join(" ");
+        //     query = query.sort(sortBy);
+        // } else {
+        //     query = query.sort("-createdAt")
+        // }
+
+
+        // 3// LIMITING not wokring
+        // if (req.query.fields) {
+        //     const fields = req.query.fields.split(",").join(" ");
+        //     // query = query.select("name duration price")
+        //     query = query.select(fields)
+        // } else {
+        //     query = query.select("-__v")
+        // }
+
+        //4) PAGINATION page=2&limit=10
+
+        // query = query.skip(2).limit(10)
+
+        // const page = parseInt(req.query.page) || 1;
+        // const limit = parseInt(req.query.limit) || 100;
+        // const skip = (page - 1) * limit
+
+        // query = query.skip(skip).limit(limit);
+
+        //send response
+        const tours = await query
         res.status(200).json({
             status: "succes",
             result: tours.length,
