@@ -1,36 +1,18 @@
-function minStars(scores) {
-    const n = scores.length;
-    console.log(n)
-    const left = new Array(n).fill(1);
-    console.log(left)
-    // const right = new Array(n).fill(1);
+// Question 1 --- >>> //to find number is plaindrome or not
+// value x= 121 ====> output true
+// value x= 10 ====> output false 
 
-    // Traverse from left to right, assigning stars based on behavior scores
-    for (let i = 1; i < n; i++) {
-        debugger
-        if (scores[i] > scores[i - 1]) {
+// so this is numerical numbner and we will first convert this to string 
+// we have an inbuilt function in javascript to reverse the string in javascript 
+// lastly we will join the string with join method
+//reverse method is not available to strings rather it is availabe on array 
+const isPalindrome = function (x) {
+    // const number = x.toString().split("").reverse().join("") 
+    // console.log(number)
+    return x === x.toString().split("").reverse("").join("") * 1
 
-            left[i] = left[i - 1] + 1;
-        }
-    }
-
-
-    // Traverse from right to left, assigning stars based on behavior scores
-    // for (let i = n - 2; i >= 0; i--) {
-    //     if (scores[i] > scores[i + 1]) {
-    //         right[i] = right[i + 1] + 1;
-    //     }
-    // }
-
-    return scores
-    // Calculate the total number of stars required
-    // let totalStars = 0;
-    // for (let i = 0; i < n; i++) {
-    //     totalStars += Math.max(left[i], right[i]);
-    // }
-
-    // return totalStars;
+    // 123 ===  "123"=>["1","2","3"]=> ["3","2","1"] =>> "123"  * 1 = 123
 }
 
-// Test cases
-console.log(minStars([3, 4, 5])); // Output: 5
+const res = isPalindrome(121)
+console.log(res)
