@@ -16,3 +16,21 @@ export const getAllTasks = async () => {
         throw new Error(error.response.message)
     }
 }
+
+export const createTask = async (taskData) => {
+    try {
+        const response = await axios.post(BASE_URL, taskData)
+
+    } catch (error) {
+        throw new Error(error.response.data.message)
+    }
+}
+
+export const getTask = async (taskId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/${taskId}`)
+        return response.data.task
+    } catch (error) {
+        console.log(error)
+    }
+}
