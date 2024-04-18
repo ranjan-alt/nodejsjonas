@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { createTask } from "../api/taskApi"
 
-const TaskForm = () => {
+const TaskForm = ({ fetchTask }) => {
 
     const [name, setName] = useState("")
     const [completed, setCompleted] = useState(false)
@@ -12,6 +12,7 @@ const TaskForm = () => {
         try {
 
             await createTask({ name, completed })
+            fetchTask()
         } catch (error) {
             console.log("Error", error)
         }

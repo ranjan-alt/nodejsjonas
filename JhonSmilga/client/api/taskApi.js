@@ -34,3 +34,22 @@ export const getTask = async (taskId) => {
         console.log(error)
     }
 }
+
+export const updateTask = async (taskId, taskData) => {
+    try {
+        const response = await axios.put(`${BASE_URL}/${taskId}`, taskData);
+        return response.data.data.task
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const deleteTask = async (taskId) => {
+    try {
+        const response = await axios.delete(`${BASE_URL}/${taskId}`);
+        return response.data.data.task;
+    } catch (error) {
+        throw new Error(error.response.data.msg || 'Error deleting task');
+    }
+}
